@@ -5,9 +5,6 @@
  */
 package mobile;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author anmol
@@ -48,12 +45,15 @@ public class RoutingMapTree{
         }
 
 	public void performAction(String actionMessage) {
-            String message, a,b;
+            String message="";
+            String a="";
+            String b="";
             int mode=0;
             for(int i=0;i<actionMessage.length();i++){
                 if(actionMessage.charAt(i)==' ') mode++;
                 else if(mode==0) message=message+actionMessage.charAt(i);
-                else
+                else if(mode==1) a=a+actionMessage.charAt(i);
+                else b= b+actionMessage.charAt(i);
             }
 		System.out.println(actionMessage);	
 	}
