@@ -13,22 +13,23 @@ import java.util.*;
  */
 public class Exchange {
     int identifier;
-    List<Exchange> children;
+    ExchangeList children;
     MobilePhoneSet mps;
     Exchange parent;
-    Exchange(int number){
+    public Exchange(int number){
         this.parent = null;
-        this.children = null;
-        this.mps = null;
-        identifier = number;
+        this.children = new ExchangeList();
+        this.mps = new MobilePhoneSet();
+        this.identifier = number;
     }
     
     public Exchange parent(){
         return parent;
     }
     public void addChild(Exchange a){
-        a.parent=this;
-        this.children.add(a);
+        
+            this.children.add(a);
+        
     }
     public int numChildren(){
         return children.size();

@@ -5,17 +5,12 @@
  */
 package mobile;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author anmol
  */
-public class Mobile {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+public class ExchangeList extends LinkedList<Exchange> {
     
 }

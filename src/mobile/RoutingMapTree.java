@@ -22,14 +22,14 @@ public class RoutingMapTree{
             return false;
         }
         public void switchOn(MobilePhone a, Exchange b){
-            MobilePhone newphone = a;
-            newphone.exch = b;
+            a.exch = b;
             while(b!=null){
-                b.residentSet().Insert(newphone);
+                b.residentSet().Insert(a);
+                b=b.parent;
             }
         }
         public Exchange finde(int id){
-            if(id == this.rootNode.identifier) return rootNode;
+            if(id == rootNode.identifier) return rootNode;
             for(int i=0;i<rootNode.numChildren();i++){
                 if(rootNode.subtree(i).finde(id)!=null) return rootNode.subtree(i).finde(id); 
             }
@@ -50,7 +50,15 @@ public class RoutingMapTree{
                 }
             }
         }
-
+        
+    public MobilePhone find(int num){
+        Iterator it = rootNode.residentSet().linkedl.iterator();
+        while(it.hasNext()){
+            MobilePhone mbph = (MobilePhone) it.next();
+            if(mbph.number()==num) return mbph;
+        }
+        return null;
+    }
 	public void performAction(String actionMessage) {
             String message="";
             String a="";
@@ -62,28 +70,46 @@ public class RoutingMapTree{
                 else if(mode==1) a=a+actionMessage.charAt(i);
                 else b= b+actionMessage.charAt(i);
             }
-            int c= Integer.parseInt(a);
-            int d= Integer.parseInt(b);
+            
             if(message.equals("addExchange")){
+                int c= Integer.parseInt(a);
+                int d= Integer.parseInt(b);
                 Exchange a1 = this.finde(c);
+                if(a1==null) {
+                    a1 = new Exchange(c);
+                } 
                 Exchange b1 = new Exchange(d);
+                b1.parent = a1;
                 a1.addChild(b1);
+                
             }
             else if(message.equals("switchOnMobile")){
-                MobilePhone a1 = rootNode.residentSet().find(c);
+                
+                int c= Integer.parseInt(a);
+                int d= Integer.parseInt(b);
+                MobilePhone a1 = find(c);
+                if(a1 == null) a1 = new MobilePhone(c);
                 Exchange b1 = this.finde(d);
+                if(b1==null) b1 = new Exchange(d);
                 this.switchOn(a1, b1);
             }
             else if(message.equals("switchOffMobile")){
-                MobilePhone a1 = rootNode.residentSet().find(c);
+                int c= Integer.parseInt(a);
+                
+                MobilePhone a1 = find(c);
                 this.switchOff(a1);
             }
             else if(message.equals("queryNthChild")){
+                int c= Integer.parseInt(a);
+            int d= Integer.parseInt(b);
                 Exchange a1 = this.finde(c);
-                actionMessage = Integer.toString(a1.child(d).identifier);
+                
+                System.out.println(Integer.toString(a1.child(d).identifier));
             }
             else if(message.equals("queryMobilePhoneSet")){
+                int c= Integer.parseInt(a);
                 Exchange a1 = this.finde(c);
+                
                 MobilePhoneSet b1 = a1.residentSet();
                 int i;
                 for(i=0;i<b1.linkedl.size()-1;i++){
@@ -92,8 +118,9 @@ public class RoutingMapTree{
                 }
                 MobilePhone c1;
                 c1 = (MobilePhone) b1.linkedl.get(i);
-                System.out.print(c1.number);
-            }	
+                System.out.print(c1.number+"\n");
+            }
+            
 	}
 }
 

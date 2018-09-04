@@ -54,14 +54,6 @@ public class Myset {
         }
         return inter;
     }
-    public MobilePhone find(int num){
-        Iterator it = linkedl.iterator();
-        while(it.hasNext()){
-            MobilePhone mbph = (MobilePhone) it.next();
-            if(mbph.number()==num) return mbph;
-        }
-        return null;
-    }
             
             
 }

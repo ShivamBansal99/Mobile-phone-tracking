@@ -3,7 +3,6 @@ package mobile;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import mobile.RoutingMapTree;
 
 public class assn2checker
 {
@@ -15,7 +14,7 @@ public class assn2checker
 		try {
 			String actionString;
 			br = new BufferedReader(new FileReader("actions1.txt"));
-
+                        
 			while ((actionString = br.readLine()) != null) {
 				r.performAction(actionString);
 			}
