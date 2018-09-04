@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package mobile;
-
+import java.util.*;
 /**
  *
  * @author anmol
@@ -66,22 +66,34 @@ public class RoutingMapTree{
             int d= Integer.parseInt(b);
             if(message.equals("addExchange")){
                 Exchange a1 = this.finde(c);
-                Exchange b1 = new Exchange(b);
+                Exchange b1 = new Exchange(d);
                 a1.addChild(b1);
             }
             else if(message.equals("switchOnMobile")){
-                
+                MobilePhone a1 = rootNode.residentSet().find(c);
+                Exchange b1 = this.finde(d);
+                this.switchOn(a1, b1);
             }
             else if(message.equals("switchOffMobile")){
-                
+                MobilePhone a1 = rootNode.residentSet().find(c);
+                this.switchOff(a1);
             }
             else if(message.equals("queryNthChild")){
-                
+                Exchange a1 = this.finde(c);
+                actionMessage = Integer.toString(a1.child(d).identifier);
             }
             else if(message.equals("queryMobilePhoneSet")){
-                
-            }
-		System.out.println(actionMessage);	
+                Exchange a1 = this.finde(c);
+                MobilePhoneSet b1 = a1.residentSet();
+                int i;
+                for(i=0;i<b1.linkedl.size()-1;i++){
+                    MobilePhone c1 = (MobilePhone) b1.linkedl.get(i);
+                    System.out.print(c1.number + ", ");
+                }
+                MobilePhone c1;
+                c1 = (MobilePhone) b1.linkedl.get(i);
+                System.out.print(c1.number);
+            }	
 	}
 }
 
