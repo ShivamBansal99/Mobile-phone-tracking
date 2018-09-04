@@ -9,7 +9,7 @@ package mobile;
  * @author anmol
  */
 public class MobilePhone extends Object {
-    int number;
+    public int number;
     private Boolean stat;
     public Exchange exch;
     MobilePhone(int num){

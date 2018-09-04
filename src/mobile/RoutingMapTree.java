@@ -28,6 +28,13 @@ public class RoutingMapTree{
                 b.residentSet().Insert(newphone);
             }
         }
+        public Exchange finde(int id){
+            if(id == this.rootNode.identifier) return rootNode;
+            for(int i=0;i<rootNode.numChildren();i++){
+                if(rootNode.subtree(i).finde(id)!=null) return rootNode.subtree(i).finde(id); 
+            }
+            return null;
+        }
         public void switchOff(MobilePhone a){
             Exchange c = rootNode;
             RoutingMapTree childr;
@@ -54,6 +61,25 @@ public class RoutingMapTree{
                 else if(mode==0) message=message+actionMessage.charAt(i);
                 else if(mode==1) a=a+actionMessage.charAt(i);
                 else b= b+actionMessage.charAt(i);
+            }
+            int c= Integer.parseInt(a);
+            int d= Integer.parseInt(b);
+            if(message.equals("addExchange")){
+                Exchange a1 = this.finde(c);
+                Exchange b1 = new Exchange(b);
+                a1.addChild(b1);
+            }
+            else if(message.equals("switchOnMobile")){
+                
+            }
+            else if(message.equals("switchOffMobile")){
+                
+            }
+            else if(message.equals("queryNthChild")){
+                
+            }
+            else if(message.equals("queryMobilePhoneSet")){
+                
             }
 		System.out.println(actionMessage);	
 	}
