@@ -5,12 +5,10 @@
  */
 package mobile;
 
-import java.util.LinkedList;
-
 /**
  *
  * @author anmol
  */
-public class ExchangeList<Exchange> extends SinglyLinkedListImpl<Exchange> {
+public class ExchangeList<Exchange> extends SinglyLinkedListImpl {
     
 }

@@ -11,18 +11,18 @@ import java.util.NoSuchElementException;
  * @author anmol
  * @param <T>
  */
-public class SinglyLinkedListImpl<T> implements Iterable<T>{
-    private Node<T> head;
-    private Node<T> tail;
+public class SinglyLinkedListImpl implements Iterable{
+    private Node head;
+    private Node tail;
      private int size=0;
 
     @Override
-    public Iterator<T> iterator() {
-        return new LLIterator<T>();
+    public Iterator iterator() {
+        return new LLIterator();
     }
-     class LLIterator<T> implements Iterator<T> {
+     class LLIterator implements Iterator {
         int current = 0;  // the current element we are looking at
-        Node<T> curr =(Node<T>) head;
+        Node curr =(Node) head;
         // return whether or not there are more elements in the array that
         // have not been iterated over.
         public boolean hasNext() {
@@ -36,18 +36,18 @@ public class SinglyLinkedListImpl<T> implements Iterable<T>{
 
         // return the next element of the iteration and move the current
         // index to the element after that.
-        public T next() {
+        public Object next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            T a = curr.getValue();
+            Object a = curr.getValue();
             curr=curr.getNextRef();
             return a;
         }
     }
-    public void add(T element){
+    public void add(Object element){
          
-        Node<T> nd = new Node<T>();
+        Node nd = new Node();
         nd.setValue(element);
         /**
          * check if the list is empty
@@ -72,7 +72,7 @@ public class SinglyLinkedListImpl<T> implements Iterable<T>{
         if(head == null){
             System.out.println("Underflow...");
         }
-        Node<T> tmp = head;
+        Node tmp = head;
         head = tmp.getNextRef();
         if(head == null){
             tail = null;
@@ -85,7 +85,7 @@ public class SinglyLinkedListImpl<T> implements Iterable<T>{
     public int size(){
         return size;
     }
-    public Boolean contains(T o){
+    public Boolean contains(Object o){
         for(int i=0;i<this.size;i++){
             if(this.get(i).equals(o)){
                 return true;
@@ -93,8 +93,8 @@ public class SinglyLinkedListImpl<T> implements Iterable<T>{
         }
         return false;
     }
-    public T get(int i){
-        Node<T> ptr = this.head;
+    public Object get(int i){
+        Node ptr = this.head;
         if(i>=size) return null;
         for(int j=0;j<i;j++){
             ptr= ptr.getNextRef();
@@ -102,22 +102,22 @@ public class SinglyLinkedListImpl<T> implements Iterable<T>{
         if(ptr==null) return null;
         return ptr.getValue();
     }
-    public T remove(){
+    public Object remove(){
         if(head!=null){
-            Node<T> res = head;
+            Node res = head;
             head = head.getNextRef();
             size--;
             return res.getValue();
         }
         return null;
     }
-    public void remove(T o){
-        Node<T> s = head;
+    public void remove(Object o){
+        Node s = head;
         if(head.getValue().equals(o)) {head = head.getNextRef();size--;}
         else{
             for(int i=0;i<size && s.getNextRef()!=null;i++){
                 if(s.getNextRef().getValue().equals(o)){
-                    Node<T> a=s.getNextRef().getNextRef();
+                    Node a=s.getNextRef().getNextRef();
                     s.setNextRef(a);
                     size--;
                 }
@@ -127,7 +127,7 @@ public class SinglyLinkedListImpl<T> implements Iterable<T>{
         
     }
     public SinglyLinkedListImpl clone(){
-        SinglyLinkedListImpl<T> res = new SinglyLinkedListImpl<>();
+        SinglyLinkedListImpl res = new SinglyLinkedListImpl();
         for(int i=0;i<this.size;i++){
             res.add(this.get(i));
         }
@@ -135,25 +135,25 @@ public class SinglyLinkedListImpl<T> implements Iterable<T>{
     }
 }
  
-class Node<T> implements Comparable<T> {
+class Node implements Comparable {
      
-    private T value;
-    private Node<T> nextRef;
+    private Object value;
+    private Node nextRef;
      
-    public T getValue() {
+    public Object getValue() {
         return value;
     }
-    public void setValue(T value) {
+    public void setValue(Object value) {
         this.value = value;
     }
-    public Node<T> getNextRef() {
+    public Node getNextRef() {
         return nextRef;
     }
-    public void setNextRef(Node<T> ref) {
+    public void setNextRef(Node ref) {
         this.nextRef = ref;
     }
     @Override
-    public int compareTo(T arg) {
+    public int compareTo(Object arg) {
         if(arg == this.value){
             return 0;
         } else {
