@@ -41,13 +41,14 @@ public class RoutingMapTree{
             while(c.residentSet().IsMember(a)){
                 try {
                     c.residentSet().Delete(a);
+                    for(int i=0;i<c.numChildren();i++){
+                        childr = c.subtree(i);
+                        childr.switchOff(a);
+                    }
                 } catch (Exception ex) {
                     System.out.println("Not possible");
                 }
-                for(int i=0;i<c.numChildren();i++){
-                    childr = c.subtree(i);
-                    childr.switchOff(a);
-                }
+                
             }
         }
         
@@ -104,9 +105,10 @@ public class RoutingMapTree{
             int d= Integer.parseInt(b);
                 Exchange a1 = this.finde(c);
                 
-                System.out.println(Integer.toString(a1.child(d).identifier));
+                System.out.println(actionMessage+" : "+Integer.toString(a1.child(d).identifier));
             }
             else if(message.equals("queryMobilePhoneSet")){
+                System.out.print(actionMessage+" : ");
                 int c= Integer.parseInt(a);
                 Exchange a1 = this.finde(c);
                 
