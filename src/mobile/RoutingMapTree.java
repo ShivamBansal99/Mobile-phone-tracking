@@ -96,9 +96,8 @@ public class RoutingMapTree{
             }
             else if(message.equals("switchOffMobile")){
                 int c= Integer.parseInt(a);
-                
                 MobilePhone a1 = find(c);
-                this.switchOff(a1);
+                if(a1!=null) this.switchOff(a1);
             }
             else if(message.equals("queryNthChild")){
                 int c= Integer.parseInt(a);

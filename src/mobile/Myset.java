@@ -12,7 +12,7 @@ import java.lang.*;
  * @param <Object>
  */
 public class Myset {
-    public LinkedList<Object> linkedl = new LinkedList<>();
+    public SinglyLinkedListImpl<Object> linkedl = new SinglyLinkedListImpl<>();
     public Boolean isEmpty(){
         return this.linkedl.isEmpty();
     }
@@ -28,10 +28,10 @@ public class Myset {
     }
     public Myset Union(Myset a){
         Myset union= new Myset();
-        LinkedList<Object> an;
-        LinkedList<Object> bn;
-        an = (LinkedList<Object>) a.linkedl.clone();
-        bn = (LinkedList<Object>) this.linkedl.clone();
+        SinglyLinkedListImpl<Object> an;
+        SinglyLinkedListImpl<Object> bn;
+        an = (SinglyLinkedListImpl<Object>) a.linkedl.clone();
+        bn = (SinglyLinkedListImpl<Object>) this.linkedl.clone();
         while(!an.isEmpty()){
             union.Insert(an.remove());
         }
@@ -42,10 +42,10 @@ public class Myset {
     }
     public Myset Intersection(Myset a){
         Myset inter= new Myset();
-        LinkedList<Object> an;
-        LinkedList<Object> bn;
-        an = (LinkedList<Object>) a.linkedl.clone();
-        bn = (LinkedList<Object>) this.linkedl.clone();
+        SinglyLinkedListImpl<Object> an;
+        SinglyLinkedListImpl<Object> bn;
+        an = (SinglyLinkedListImpl<Object>) a.linkedl.clone();
+        bn = (SinglyLinkedListImpl<Object>) this.linkedl.clone();
         while(!an.isEmpty()){
             Object v = an.remove();
             if(bn.contains(v)){

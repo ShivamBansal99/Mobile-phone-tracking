@@ -35,7 +35,7 @@ public class Exchange {
         return children.size();
     }
     public Exchange child(int i){
-        return children.get(i);
+        return (Exchange) children.get(i);
     }
     public Boolean isRoot(){
         return parent==null;

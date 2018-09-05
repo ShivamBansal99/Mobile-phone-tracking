@@ -11,6 +11,6 @@ import java.util.LinkedList;
  *
  * @author anmol
  */
-public class ExchangeList extends LinkedList<Exchange> {
+public class ExchangeList<Exchange> extends SinglyLinkedListImpl<Exchange> {
     
 }
