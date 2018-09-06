@@ -9,6 +9,7 @@ import java.util.*;
  *
  * @author anmol
  */
+import java.util.*;
 public class RoutingMapTree{
         Exchange rootNode;
 	public RoutingMapTree() {
@@ -38,7 +39,7 @@ public class RoutingMapTree{
         public void switchOff(MobilePhone a){
             Exchange c = rootNode;
             RoutingMapTree childr;
-            while(c.residentSet().IsMember(a)){
+            if(c.residentSet().IsMember(a)){
                 try {
                     c.residentSet().Delete(a);
                     for(int i=0;i<c.numChildren();i++){
@@ -60,7 +61,7 @@ public class RoutingMapTree{
         }
         return null;
     }
-	public void performAction(String actionMessage) {
+	public String performAction(String actionMessage){
             String message="";
             String a="";
             String b="";
@@ -77,11 +78,19 @@ public class RoutingMapTree{
                 int d= Integer.parseInt(b);
                 Exchange a1 = this.finde(c);
                 if(a1==null) {
-                    a1 = new Exchange(c);
+                    message=message+"Exchange not present";
+                    return message;
                 } 
-                Exchange b1 = new Exchange(d);
-                b1.parent = a1;
-                a1.addChild(b1);
+                Exchange b1 = this.finde(d);
+                if(b1==null){
+                    b1 = new Exchange(d);
+                    b1.parent = a1;
+                    a1.addChild(b1);
+                    message="";
+                }else{
+                    message=message+"Exchange already present";
+                }
+                
                 
             }
             else if(message.equals("switchOnMobile")){
@@ -89,39 +98,61 @@ public class RoutingMapTree{
                 int c= Integer.parseInt(a);
                 int d= Integer.parseInt(b);
                 MobilePhone a1 = find(c);
-                if(a1 == null) a1 = new MobilePhone(c);
                 Exchange b1 = this.finde(d);
-                if(b1==null) b1 = new Exchange(d);
+                if(a1 != null) {
+                    message=message+"Mobile already present";
+                    return message;
+                }
+                else a1 = new MobilePhone(c);
+                
+                if(b1==null) {
+                    message=message+"Exchange not present";
+                    return message;
+                }
                 this.switchOn(a1, b1);
+                message="";
             }
             else if(message.equals("switchOffMobile")){
+                message="";
                 int c= Integer.parseInt(a);
                 MobilePhone a1 = find(c);
                 if(a1!=null) this.switchOff(a1);
+                else message=message+"Mobile not present or already switched off";
             }
             else if(message.equals("queryNthChild")){
                 int c= Integer.parseInt(a);
-            int d= Integer.parseInt(b);
+                int d= Integer.parseInt(b);
                 Exchange a1 = this.finde(c);
-                
-                System.out.println(actionMessage+" : "+Integer.toString(a1.child(d).identifier));
+                if(a1==null) {
+                    message=message+"Exchange not present";
+                    return message;
+                }
+                if(a1.child(d)==null) {
+                    message=message+"Child not present";
+                    return message;
+                }
+                message=actionMessage+": "+Integer.toString(a1.child(d).identifier);
             }
             else if(message.equals("queryMobilePhoneSet")){
-                System.out.print(actionMessage+" : ");
+                message=actionMessage+": ";
                 int c= Integer.parseInt(a);
                 Exchange a1 = this.finde(c);
-                
+                if(a1==null) {
+                    message=message+"Exchange not present";
+                    return message;
+                }
                 MobilePhoneSet b1 = a1.residentSet();
                 int i;
                 for(i=0;i<b1.linkedl.size()-1;i++){
                     MobilePhone c1 = (MobilePhone) b1.linkedl.get(i);
-                    System.out.print(c1.number + ", ");
+                    message=message+c1.number + ", ";
                 }
-                MobilePhone c1;
-                c1 = (MobilePhone) b1.linkedl.get(i);
-                System.out.print(c1.number+"\n");
+                MobilePhone c1 = (MobilePhone) b1.linkedl.get(i);
+                    message=message+c1.number;
             }
-            
+            return message;
 	}
 }
+
+
 

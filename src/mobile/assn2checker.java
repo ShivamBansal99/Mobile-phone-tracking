@@ -16,7 +16,9 @@ public class assn2checker
 			br = new BufferedReader(new FileReader("actions1.txt"));
                         
 			while ((actionString = br.readLine()) != null) {
-				r.performAction(actionString);
+				try{System.out.println(r.performAction(actionString));}catch(Exception e){
+                                    e.printStackTrace();
+                                }
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

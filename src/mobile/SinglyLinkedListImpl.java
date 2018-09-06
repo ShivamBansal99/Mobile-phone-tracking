@@ -33,6 +33,9 @@ public class SinglyLinkedListImpl implements Iterable{
                 return false;
             }
         }
+        public void remove(){
+            return;
+        }
 
         // return the next element of the iteration and move the current
         // index to the element after that.
