@@ -27,8 +27,11 @@ public class MobilePhone extends Object {
       public void switchOff(){
           this.stat = false;
       }
-      public Exchange location() throws Exception{
-         if(this.exch==null || stat== false) throw new Exception("Cannot return");
+      public Exchange location() {
+         if(this.exch==null || this.stat== false) {
+             System.out.println("Cannot return"); 
+             return null;
+         }
          return this.exch;
       }
 }

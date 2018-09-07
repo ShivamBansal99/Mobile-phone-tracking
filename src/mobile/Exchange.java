@@ -31,6 +31,9 @@ public class Exchange {
             this.children.add(a);
         
     }
+    public Boolean contains(Exchange a){
+        return children.contains(a);
+    }
     public int numChildren(){
         return children.size();
     }

@@ -23,6 +23,7 @@ public class RoutingMapTree{
             return false;
         }
         public void switchOn(MobilePhone a, Exchange b){
+            a.switchOn();;
             a.exch = b;
             while(b!=null){
                 b.residentSet().Insert(a);
@@ -35,6 +36,39 @@ public class RoutingMapTree{
                 if(rootNode.subtree(i).finde(id)!=null) return rootNode.subtree(i).finde(id); 
             }
             return null;
+        }
+        public Exchange findPhone(MobilePhone m){
+            return m.location();
+        }
+        public Exchange lowestRouter(Exchange a, Exchange b){
+            if(a.equals(b)) return a;
+            if(containsNode(a) && containsNode(b)) {
+                for(int i=0;i<rootNode.numChildren();i++){
+                   if(rootNode.subtree(i).lowestRouter(a, b)!=null) return rootNode.subtree(i).lowestRouter(a,b); 
+                }
+                return rootNode;
+            }
+            return null;
+        }
+        public ExchangeList routeCall(MobilePhone a, MobilePhone b){
+            ExchangeList e = new ExchangeList();
+            Exchange no = a.location();
+            Exchange lr = lowestRouter(a.location(),b.location());
+            while(no!=lr){
+                e.add(no);
+                no = no.parent();
+            }
+            e.add(lr);
+            no = b.location();
+            while(no!=lr){
+                e.addAfter(no,lr);
+                no = no.parent();
+            }
+            return e;
+        }
+        public void movePhone(MobilePhone a, Exchange b){
+            this.switchOff(a);
+            this.switchOn(a, b);
         }
         public void switchOff(MobilePhone a){
             Exchange c = rootNode;
@@ -53,14 +87,14 @@ public class RoutingMapTree{
             }
         }
         
-    public MobilePhone find(int num){
-        Iterator it = rootNode.residentSet().linkedl.iterator();
-        while(it.hasNext()){
-            MobilePhone mbph = (MobilePhone) it.next();
-            if(mbph.number()==num) return mbph;
+        public MobilePhone find(int num){
+            Iterator it = rootNode.residentSet().linkedl.iterator();
+            while(it.hasNext()){
+                MobilePhone mbph = (MobilePhone) it.next();
+                if(mbph.number()==num) return mbph;
+            }
+           return null;
         }
-        return null;
-    }
 	public String performAction(String actionMessage){
             String message="";
             String a="";
@@ -149,6 +183,66 @@ public class RoutingMapTree{
                 }
                 MobilePhone c1 = (MobilePhone) b1.linkedl.get(i);
                     message=message+c1.number;
+            }
+            else if(message.equals("queryFindPhone")){
+                message=actionMessage+": ";
+                int c= Integer.parseInt(a);
+                MobilePhone a1 = find(c);
+                if(a1==null) {
+                    message=message+"Mobile not present";
+                    return message;
+                }
+                message=message+this.findPhone(a1).identifier;
+            }
+            else if(message.equals("queryLowestRouter")){
+                message=message+": ";
+                int c= Integer.parseInt(a);
+                int d= Integer.parseInt(b);
+                Exchange a1 = finde(c);
+                Exchange b1 = finde(d);
+                if(a1 == null || b1 == null) {
+                    message=message+"Exchange not present";
+                    return message;
+                }
+                message=message+this.lowestRouter(a1, b1).identifier;
+                
+            }
+            else if(message.equals("queryFindCallPath")){
+                message=message+": ";
+                int c= Integer.parseInt(a);
+                int d= Integer.parseInt(b);
+                MobilePhone a1 = find(c);
+                MobilePhone b1 = find(d);
+                if(a1 == null || b1 == null) {
+                    message=message+"Mobile not present";
+                    return message;
+                }
+                ExchangeList ex = this.routeCall(a1, b1);
+                int i;
+                for(i=0;i<ex.size()-1;i++){
+                    Exchange temp= (Exchange) ex.get(i);
+                    message=message+ temp.identifier+", ";
+                }
+                Exchange temp= (Exchange) ex.get(i);
+                message=message+ temp.identifier;
+                
+            }
+             else if(message.equals("movePhone")){
+                
+                int c= Integer.parseInt(a);
+                int d= Integer.parseInt(b);
+                MobilePhone a1 = find(c);
+                Exchange b1 = this.finde(d);
+                if(a1 == null) {
+                    message=message+"Mobile not present";
+                    return message;
+                }
+                if(b1==null) {
+                    message=message+"Exchange not present";
+                    return message;
+                }
+                this.movePhone(a1, b1);
+                message="";
             }
             return message;
 	}

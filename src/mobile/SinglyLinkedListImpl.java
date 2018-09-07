@@ -26,12 +26,7 @@ public class SinglyLinkedListImpl implements Iterable{
         // return whether or not there are more elements in the array that
         // have not been iterated over.
         public boolean hasNext() {
-            if(curr==null) return false;
-            else if (curr.getNextRef()!=null) {
-                return true;
-            } else {
-                return false;
-            }
+            return curr!=null;
         }
         public void remove(){
             return;
@@ -69,7 +64,7 @@ public class SinglyLinkedListImpl implements Iterable{
         }
         size++;
     }
-      
+    
     public void deleteFront(){
          
         if(head == null){
@@ -81,7 +76,21 @@ public class SinglyLinkedListImpl implements Iterable{
             tail = null;
         }
     }
-     
+    public void addAfter(Object a,Object b){
+        Node pos = head;
+        Node adds = new Node();
+        adds.setValue(a);
+        for(int i=0;i<size;i++){
+            if(pos.getValue().equals(b)){
+                adds.setNextRef(pos.getNextRef());
+                pos.setNextRef(adds);
+                size++;
+                if(adds.getNextRef()==null) tail= adds;
+                break;
+            }
+            pos=pos.getNextRef();
+        }
+    }
     public Boolean isEmpty(){
         return head==null;
     }
