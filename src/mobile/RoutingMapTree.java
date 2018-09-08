@@ -9,7 +9,6 @@ import java.util.*;
  *
  * @author anmol
  */
-import java.util.*;
 public class RoutingMapTree{
         Exchange rootNode;
 	public RoutingMapTree() {
@@ -23,7 +22,7 @@ public class RoutingMapTree{
             return false;
         }
         public void switchOn(MobilePhone a, Exchange b){
-            a.switchOn();;
+            a.switchOn();
             a.exch = b;
             while(b!=null){
                 b.residentSet().Insert(a);
@@ -176,6 +175,7 @@ public class RoutingMapTree{
                     return message;
                 }
                 MobilePhoneSet b1 = a1.residentSet();
+                if(b1==null) return "residentset not present";
                 int i;
                 for(i=0;i<b1.linkedl.size()-1;i++){
                     MobilePhone c1 = (MobilePhone) b1.linkedl.get(i);

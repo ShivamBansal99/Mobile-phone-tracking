@@ -99,6 +99,7 @@ public class SinglyLinkedListImpl implements Iterable{
     }
     public Boolean contains(Object o){
         for(int i=0;i<this.size;i++){
+            if(get(i)==null) return false;
             if(this.get(i).equals(o)){
                 return true;
             }
@@ -119,18 +120,24 @@ public class SinglyLinkedListImpl implements Iterable{
             Node res = head;
             head = head.getNextRef();
             size--;
+            if(head==null) tail=null;
             return res.getValue();
         }
         return null;
     }
     public void remove(Object o){
         Node s = head;
-        if(head.getValue().equals(o)) {head = head.getNextRef();size--;}
+        if(head.getValue().equals(o)) {
+            head = head.getNextRef();
+            size--;
+            if(head==null) tail=null;
+        }
         else{
             for(int i=0;i<size && s.getNextRef()!=null;i++){
                 if(s.getNextRef().getValue().equals(o)){
                     Node a=s.getNextRef().getNextRef();
                     s.setNextRef(a);
+                    if(a==null) tail= s;
                     size--;
                 }
                 s=s.getNextRef();
